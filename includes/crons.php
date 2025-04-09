@@ -213,8 +213,15 @@ function pmpropbc_cancel_overdue_orders() {
 			// Get the order object.
 			$order = new MemberOrder($order_id);
 
-			//remove their membership
-			$level_removed = pmpro_cancelMembershipLevel( $order->membership_id, $order->user_id, 'cancelled' );
+			// Get the membership level object from the order
+			$membership_level = $order->getMembershipLevel();
+
+			// Remove the membership if it's recurring
+			if ( pmpro_isLevelRecurring( $membership_level ) ) {
+				$level_removed = pmpro_cancelMembershipLevel( $order->membership_id, $order->user_id, 'cancelled' );
+			} else {
+				$level_removed = false;
+			}
 
 			// Update the order.
 			$order->status = 'error';
