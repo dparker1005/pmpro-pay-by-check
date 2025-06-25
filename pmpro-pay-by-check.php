@@ -36,6 +36,21 @@ require_once PMPRO_PAY_BY_CHECK_DIR . '/includes/frontend.php';
 require_once PMPRO_PAY_BY_CHECK_DIR . '/includes/functions.php';
 require_once PMPRO_PAY_BY_CHECK_DIR . '/includes/member-pending-deprecated.php';
 
+/**
+ * Set up email templates.
+ */
+function pmpropbc_load_email_templates() {
+ 	if ( class_exists( 'PMPro_Email_Template' ) ) {
+ 		require_once PMPRO_PAY_BY_CHECK_DIR . '/classes/email-templates/class-pmpro-email-template-check-pending-admin.php';
+		require_once PMPRO_PAY_BY_CHECK_DIR . '/classes/email-templates/class-pmpro-email-template-check-pending.php';
+		require_once PMPRO_PAY_BY_CHECK_DIR . '/classes/email-templates/class-pmpro-email-template-check-pending-reminder.php';
+ 	} else {
+ 		// Legacy email templates.
+ 		add_filter( 'pmproet_templates', 'pmpropbc_email_template_to_pmproet_add_on' );
+ 	}
+ }
+ add_action( 'init', 'pmpropbc_load_email_templates', 8 );
+
 /*
 	Load plugin textdomain.
 */

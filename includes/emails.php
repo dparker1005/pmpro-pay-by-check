@@ -63,7 +63,6 @@ function pmpropbc_email_template_to_pmproet_add_on( $template ) {
 
 	return $template;
 }
-add_filter( 'pmproet_templates', 'pmpropbc_email_template_to_pmproet_add_on' );
 
 /**
  * Send the check_pending email.
@@ -76,6 +75,12 @@ function pmpropbc_send_check_pending_email( $order ) {
 	$user = get_userdata( $order->user_id );
 	if ( empty( $user ) ) {
 		return false;
+	}
+
+	if ( class_exists( 'PMPro_Email_Template_Check_Pending' ) ) {
+		// Use the PMPro Email Template class if available.
+		$email_template = new PMPro_Email_Template_Check_Pending( $user, $order );
+		return $email_template->send();
 	}
 
 	// Get the membership level.
@@ -151,6 +156,12 @@ function pmpropbc_send_check_pending_admin_email( $order ) {
 		return false;
 	}
 
+	// If the PMPro Email Template class is available, use it.
+	if ( class_exists( 'PMPro_Email_Template_Check_Pending_Admin' ) ) {
+		$email_template = new PMPro_Email_Template_Check_Pending_Admin( $user, $order );
+		return $email_template->send();
+	}
+
 	// Get the membership level.
 	$level = $order->getMembershipLevel();
 	if ( empty( $level ) ) {
@@ -220,6 +231,12 @@ function pmpropbc_send_check_pending_reminder_email( $order ) {
 	$user = get_userdata( $order->user_id );
 	if ( empty( $user ) ) {
 		return false;
+	}
+
+	// If the PMPro Email Template class is available, use it.
+	if ( class_exists( 'PMPro_Email_Template_Check_Pending_Reminder' ) ) {
+		$email_template = new PMPro_Email_Template_Check_Pending_Reminder( $user, $order );
+		return $email_template->send();
 	}
 
 	// Get the membership level.
