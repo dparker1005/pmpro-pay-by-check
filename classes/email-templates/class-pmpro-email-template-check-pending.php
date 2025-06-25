@@ -85,7 +85,7 @@ class PMPro_Email_Template_Check_Pending extends PMPro_Email_Template {
 	 * @return string The email body.
 	 */
 	public static function get_default_body() {
-		return  wp_kses_post( __( '<p>You have a new Order for !!sitename!!.</p>
+		return  wp_kses_post( __( '<p>You have a new order for !!sitename!!.</p>
 
 !!instructions!!
 
