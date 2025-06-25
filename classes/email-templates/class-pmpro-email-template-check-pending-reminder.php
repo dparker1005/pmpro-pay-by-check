@@ -2,7 +2,7 @@
 /**
  * Email Template: Check Pending Reminder
  *
- * @since TBD
+ * @since 1.1.4
  */
 class PMPro_Email_Template_Check_Pending_Reminder extends PMPro_Email_Template {
 
@@ -222,7 +222,7 @@ class PMPro_Email_Template_Check_Pending_Reminder extends PMPro_Email_Template {
 	/**
 	 * Returns the arguments to send the test email from the abstract class.
 	 *
-	 * @since TBD
+	 * @since 1.1.4
 	 *
 	 * @return array The arguments to send the test email from the abstract class.
 	 */
